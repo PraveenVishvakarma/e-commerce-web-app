@@ -1,9 +1,18 @@
 import Image from 'next/image'
+import HomeBanner from './components/HomeBanner'
+import Container from './components/Container'
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-     <p>hii</p>
-    </main>
-  )
+  return ( 
+    <div className='p-8'> 
+      <Container>
+        <div>
+          <HomeBanner/>
+        </div> 
+     </Container>
+    </div>
+    
+    
+  ) 
 }
+
