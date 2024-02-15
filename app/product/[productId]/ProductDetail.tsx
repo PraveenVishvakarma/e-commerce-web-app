@@ -4,6 +4,8 @@ import SetColor from "@/app/components/SetColor";
 import { Rating } from "@mui/material";
 import { useCallback, useState } from "react";
 import SetQuantity from "@/app/components/products/SetQuantity";
+import Button from "@/app/components/products/Button";
+import ProductImage from "@/app/components/products/ProductImage";
 
 interface productDetailProps{
     product:any;
@@ -64,7 +66,8 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
     const productRating=product.reviews.reduce((accu:number ,item:any)=>item.rating+accu,0)/product.reviews.length;
     return(
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div>Image</div>
+            <ProductImage cartProduct={cartProduct}
+            product={product} handleColorSelect={handleColorSelect} />
             <div className="flex flex-col gap-1 text-slate-500 text-sm">
                 <p className="text-3xl font-medium text-slate-700">{product.name}</p>
                 <div className="flex gap-2 items-center ">
@@ -95,7 +98,10 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
                 />
                 </div>
                 <Divider/>
-                <button className="bg-slate-500 text-white p-3 rounded-lg hover:opacity-70">Add to Cart</button>
+                <div className="max-w-[300px]">
+                    <Button small outline label={"Add to Cart"} onClick={()=>{}} />
+                </div>
+                
             </div>
         </div>
     )
