@@ -11,7 +11,6 @@ interface SetQuantityProps{
 
 const btnStyle='border-[1.2px] border-slate-300 px-2 rounded';
 const SetQuantity:React.FC<SetQuantityProps>=({cartCounter,cartProduct, handleQuantityDecrease, handleQuantityIncrease})=>{
-    console.log("cartProduct.qauntity");
     return(
         <div  className="flex gap-2 ">
             {cartCounter? null: <div className="font-seminbold uppercase">Quantity:</div>}

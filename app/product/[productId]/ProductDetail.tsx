@@ -2,10 +2,13 @@
 
 import SetColor from "@/app/components/SetColor";
 import { Rating } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SetQuantity from "@/app/components/products/SetQuantity";
 import Button from "@/app/components/products/Button";
 import ProductImage from "@/app/components/products/ProductImage";
+import { useCart } from "@/hooks/useCart";
+import { MdCheckCircle } from "react-icons/md";
+import { useRouter } from "next/navigation";
 
 interface productDetailProps{
     product:any;
@@ -27,8 +30,8 @@ export type SelectedImgType={
     colorCode:string,
     image:string
 }
-const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
-
+const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{ 
+    const{cartProducts,handleAddCartProduct}=useCart();
     const[cartProduct, setCartProduct]=useState<CartProductType>({
         id:product.id,
         name:product.name,
@@ -38,7 +41,22 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
         selectedImg:{...product.images[0]},
         qauntity:1,
         price:product.price,
-    })
+    });
+
+    const[isProductInCart, setIsProductInCart]=useState(false);
+    const router=useRouter();
+
+    useEffect(()=>{
+        setIsProductInCart(false);
+        if(cartProducts){
+            const productIndex=cartProducts.findIndex((item)=>item.id===cartProduct.id);
+            if(productIndex>-1){
+                setIsProductInCart(true);
+            }
+        }
+    },[cartProducts]);
+
+    console.log( "Product page rendering time "+ cartProducts);
 
     const handleColorSelect=useCallback((value:SelectedImgType)=>{
         setCartProduct((pre)=>{
@@ -64,6 +82,12 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
     },[cartProduct])
 
     const productRating=product.reviews.reduce((accu:number ,item:any)=>item.rating+accu,0)/product.reviews.length;
+    
+    const handleAddToCart = () => {
+        console.log('Add to Cart button clicked');
+        handleAddCartProduct(product);
+    };
+
     return(
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <ProductImage cartProduct={cartProduct}
@@ -82,9 +106,14 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
                 </div>
                 <div>
                     <span className="font-semibold uppercase mr-2">Brand:</span>{product.brand}
-                </div>
+                </div> 
                 <div className={product.inStock?"text-teal-500":"text-red-500"}>{product.inStock?"In Stock":"Out of Stock"}</div>
                 <Divider/>
+                {isProductInCart?<> <p className="flex my-2 text-slate-500  items-center gap-1"><MdCheckCircle color="blue" size={24} /> <span>Product Added In Cart</span></p>
+                <div className="max-w-[300px]">
+                    <Button label="View Cart" outline onClick={()=>{router.push("/cart")}} />
+                </div>
+                 </>:<>
                 <div>
                     <SetColor cartProduct={cartProduct} handleColorSelect={handleColorSelect}
                     images={product.images}
@@ -99,8 +128,9 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
                 </div>
                 <Divider/>
                 <div className="max-w-[300px]">
-                    <Button small outline label={"Add to Cart"} onClick={()=>{}} />
+                    <Button  small label={"Add toCart"} onClick={handleAddToCart}/>
                 </div>
+                </>}
                 
             </div>
         </div>
