@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import Footer from './components/footer/Footer'
 import Navbar from './components/nav/Navbar'
-import CartProvider from '@/provider/CartProvider'
 import { Toaster } from 'react-hot-toast'
+import { Providers } from './provider/Providers'
 
 const poppins = Poppins({ subsets: ['latin'], weight:['400','700'] }) 
 
@@ -27,7 +27,7 @@ export default function RootLayout({
             color:"#fff",
           }
         }} />
-        <CartProvider>
+        <Providers>
         <div className='flex flex-col min-h-screen'>
           <Navbar/>  
           <main className='flex-grow'>
@@ -35,7 +35,7 @@ export default function RootLayout({
           </main>
           <Footer/>
         </div> 
-        </CartProvider>
+        </Providers>
       </body>
     </html>
   )

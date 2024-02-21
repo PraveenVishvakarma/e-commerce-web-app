@@ -1,14 +1,17 @@
 import Container from '@/app/components/Container';
 import React from 'react'
 import ProductDetail from './ProductDetail';
-import { product } from '@/utils/product';
 import ListRating from './ListRating';
+import { products } from '@/utils/products';
 
 interface IParam{
     productId?:string;
 }
 
 export default function productPage({params}:{params:IParam}) {
+    const product=products.find((product)=>{
+        return product.id===params.productId;
+    })
     return (
     <div className='p-8'>
         <Container>

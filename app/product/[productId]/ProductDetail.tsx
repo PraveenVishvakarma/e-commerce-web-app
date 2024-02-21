@@ -6,9 +6,12 @@ import { useCallback, useEffect, useState } from "react";
 import SetQuantity from "@/app/components/products/SetQuantity";
 import Button from "@/app/components/products/Button";
 import ProductImage from "@/app/components/products/ProductImage";
-import { useCart } from "@/hooks/useCart";
+import { UseSelector, useDispatch, useSelector } from "react-redux";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { AppDispatch, RootState } from "@/store/store";
+import { addtoCart } from "@/slices/cartSlice";
+import { toast } from "react-hot-toast";
 
 interface productDetailProps{
     product:any;
@@ -31,7 +34,7 @@ export type SelectedImgType={
     image:string
 }
 const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{ 
-    const{cartProducts,handleAddCartProduct}=useCart();
+    
     const[cartProduct, setCartProduct]=useState<CartProductType>({
         id:product.id,
         name:product.name,
@@ -44,19 +47,21 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
     });
 
     const[isProductInCart, setIsProductInCart]=useState(false);
+    const {cartProducts}=useSelector((state:RootState)=>state.cart);
     const router=useRouter();
+    const dispatch=useDispatch<AppDispatch>();
+
+    console.log(cartProducts);
 
     useEffect(()=>{
-        setIsProductInCart(false);
         if(cartProducts){
-            const productIndex=cartProducts.findIndex((item)=>item.id===cartProduct.id);
+            const productIndex=cartProducts.findIndex((item:any)=>item.id===cartProduct.id);
             if(productIndex>-1){
                 setIsProductInCart(true);
             }
         }
     },[cartProducts]);
 
-    console.log( "Product page rendering time "+ cartProducts);
 
     const handleColorSelect=useCallback((value:SelectedImgType)=>{
         setCartProduct((pre)=>{
@@ -69,6 +74,9 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
     }
 
     const handleQuantityDecrease=useCallback(()=>{
+        if(cartProduct.qauntity===1){
+            toast.error("Item quantity can not be less than one");
+        } 
         if(cartProduct.qauntity===1) return;
         setCartProduct((pre)=>{
             return {...pre, qauntity:pre.qauntity-1};
@@ -84,9 +92,9 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
     const productRating=product.reviews.reduce((accu:number ,item:any)=>item.rating+accu,0)/product.reviews.length;
     
     const handleAddToCart = () => {
-        console.log('Add to Cart button clicked');
-        handleAddCartProduct(product);
-    };
+        dispatch(addtoCart(cartProduct));
+        toast.success("Product Added to Cart");
+    }; 
 
     return(
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
