@@ -6,8 +6,11 @@ import { CartProductType } from "../product/[productId]/ProductDetail";
 import Heading from "../components/products/Heading";
 import Button from "../components/products/Button";
 import ItemContent from "./ItemContent";
+import { fromatPrice } from "@/utils/FormatPrice";
 const CartClient=()=>{
     const {cartProducts}=useSelector((state:RootState)=>state.cart);
+    const {subtotal}=useSelector((state:RootState)=>state.cart)
+
     if(!cartProducts || cartProducts.length===0){
         return(
             <div className="flex flex-col items-center">
@@ -44,7 +47,7 @@ const CartClient=()=>{
                 <div className="flex flex-col items-start text-sm gap-1">
                     <div className="flex justify-between w-full text-base font-semibold">
                         <span>Subtotal</span>
-                        <span>100,000</span>
+                        <span>{fromatPrice(subtotal)}</span>
                     </div>
                     <p>Taxes and Shipping is Calculated at Checkout</p>
                     <Button label="Chechout" small onClick={()=>{}} />

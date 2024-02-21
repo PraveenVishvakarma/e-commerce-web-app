@@ -5,15 +5,24 @@ import Image from "next/image";
 import { fromatPrice } from "@/utils/FormatPrice";
 import SetQuantity from "../components/products/SetQuantity";
 import {useDispatch, useSelector} from "react-redux";
-import { romoveProductFromCart, increaseCartProduct, decreaseCartProduct} from "@/slices/cartSlice";
-import { AppDispatch } from "@/store/store";
+import { romoveProductFromCart, increaseCartProduct, decreaseCartProduct, getTotal} from "@/slices/cartSlice";
+import { AppDispatch, RootState } from "@/store/store";
 import { toast } from "react-hot-toast";
+import { useEffect } from "react";
 
 interface ItemContentProps{
     item:CartProductType;
 }
 const ItemContent:React.FC<ItemContentProps>=({item})=>{
     const dispatch=useDispatch<AppDispatch>();
+    const {cartTotalQuantity}=useSelector((state:RootState)=>state.cart);
+    const {cartProducts}=useSelector((state:RootState)=>state.cart);
+    
+    
+
+    useEffect(()=>{
+        dispatch(getTotal());
+    },[cartProducts]);
 
     const handleRemovefromCart=()=>{
         dispatch(romoveProductFromCart(item));

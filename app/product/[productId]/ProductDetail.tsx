@@ -10,7 +10,7 @@ import { UseSelector, useDispatch, useSelector } from "react-redux";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { AppDispatch, RootState } from "@/store/store";
-import { addtoCart } from "@/slices/cartSlice";
+import { addtoCart, getTotal } from "@/slices/cartSlice";
 import { toast } from "react-hot-toast";
 
 interface productDetailProps{
@@ -51,7 +51,6 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
     const router=useRouter();
     const dispatch=useDispatch<AppDispatch>();
 
-    console.log(cartProducts);
 
     useEffect(()=>{
         if(cartProducts){
@@ -95,6 +94,10 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
         dispatch(addtoCart(cartProduct));
         toast.success("Product Added to Cart");
     }; 
+
+    useEffect(()=>{
+        dispatch(getTotal());
+    },[cartProducts]);
 
     return(
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
