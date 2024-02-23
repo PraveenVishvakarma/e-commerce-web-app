@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../components/inputs/Input";
 import Heading from "../components/products/Heading";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -11,10 +11,22 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import {signIn} from "next-auth/react"
 import { useRouter } from "next/navigation";
-
-const RegisterForm=()=>{
+import { safeUser } from "@/types";
+interface RegisterFormProps{
+    currentUser:safeUser| null;
+}
+const RegisterForm:React.FC<RegisterFormProps>=({currentUser})=>{
     const[isLoading, setIsLoading]=useState(false);
     const router=useRouter();
+
+    useEffect(()=>{
+        if(currentUser){
+            router.push("/cart");
+            router.refresh();
+        }
+    },[])
+
+
     const {register, handleSubmit, formState:{errors}}=useForm<FieldValues>({
         defaultValues:{
             name:'',
@@ -51,10 +63,15 @@ const RegisterForm=()=>{
             setIsLoading(false);
         }
     }
+
+    if(currentUser){
+        return <p className="text-center">Logged in. Redirecting...</p>
+    }
+
     return(
         <>
         <Heading title="Sign up for E-Bazar" />
-        <Button label="Sign up with Google" outline icon={AiOutlineGoogle} onClick={()=>{}} />
+        <Button label="Continue with Google" outline icon={AiOutlineGoogle} onClick={()=>{signIn('google')}} />
         <hr className="bg-slate-300 w-full h-px" />
         <Input id='name' label="Name" disabled={isLoading} register={register} errors={errors} required />
         <Input id='email' label="Email" disabled={isLoading} register={register} errors={errors} required />
