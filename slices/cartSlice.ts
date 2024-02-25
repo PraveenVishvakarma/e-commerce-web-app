@@ -4,12 +4,14 @@ interface IntialState{
   cartTotalQuantity:number,
   subtotal:number,
   cartProducts:CartProductType[] | null,
+  paymentIntent:string| null,
 }
 
 const initialState:IntialState = {
   cartProducts: [],
   cartTotalQuantity:0,
   subtotal:0,
+  paymentIntent:null
 } 
 
 const cartSlice = createSlice({
@@ -68,10 +70,13 @@ const cartSlice = createSlice({
         state.cartTotalQuantity=accumulator.qnt;
         state.subtotal=accumulator.total;
       }
+    },
+    handleSetPaymentIntent:(state, action)=>{
+      state.paymentIntent=action.payload;
     }
   },
 });
 
-export const { addtoCart, romoveProductFromCart, increaseCartProduct, decreaseCartProduct, getTotal} = cartSlice.actions;
+export const { addtoCart, romoveProductFromCart, increaseCartProduct, decreaseCartProduct, getTotal, handleSetPaymentIntent} = cartSlice.actions;
 
 export default cartSlice.reducer;
