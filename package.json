@@ -17,6 +17,8 @@
     "@prisma/client": "^5.10.2",
     "@react-native-async-storage/async-storage": "^1.22.2",
     "@reduxjs/toolkit": "^2.2.1",
+    "@stripe/react-stripe-js": "^2.5.0",
+    "@stripe/stripe-js": "^3.0.5",
     "@types/node": "20.11.17",
     "@types/react": "18.2.55",
     "@types/react-dom": "18.2.19",

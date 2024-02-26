@@ -24,7 +24,7 @@ export async function POST(request:Request){
     }
     const body=await request.json()
     const{items, payment_intent_id}=body;
-    const total=calculateOrderAmount(items)*100;
+    const total=calculateOrderAmount(items);
     const orderData={
         user:{connect: {id:currentUser.id}},
         amount:total,
@@ -34,9 +34,9 @@ export async function POST(request:Request){
         paymentIntentId:payment_intent_id,
         products:items,
     }
+    console.log("Total amount in cents:", total);
     if(payment_intent_id){
         const current_intent=await stripe.paymentIntents.retrieve(payment_intent_id);
-        console.log("current Intent", current_intent);
 
         if(current_intent){
             const updated_intent=await stripe.paymentIntents.update(
@@ -73,7 +73,6 @@ export async function POST(request:Request){
             },
         });
         orderData.paymentIntentId=paymentIntent.id;
-        console.log("orderdaata", orderData);
         await prisma.order.create({
             data:orderData
     });

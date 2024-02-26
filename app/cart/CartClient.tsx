@@ -1,15 +1,17 @@
 import { RootState } from "@/store/store";
 import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
-import {useSelector } from "react-redux";
+import {useDispatch, useSelector } from "react-redux";
 import { CartProductType } from "../product/[productId]/ProductDetail";
 import Heading from "../components/products/Heading";
 import Button from "../components/products/Button";
 import ItemContent from "./ItemContent";
 import { fromatPrice } from "@/utils/FormatPrice";
+import { handleClearCart } from "@/slices/cartSlice";
 const CartClient=()=>{
     const {cartProducts}=useSelector((state:RootState)=>state.cart);
     const {subtotal}=useSelector((state:RootState)=>state.cart)
+    const dispatch=useDispatch();
 
     if(!cartProducts || cartProducts.length===0){
         return(
@@ -42,7 +44,7 @@ const CartClient=()=>{
             </div>
             <div className=" border-t-[1.5px] border-slate-200 gap-4 py-4 flex justify-between">
                 <div className="w-[90px]">
-                    <Button label="Clear cart" small outline onClick={()=>{}} />
+                    <Button label="Clear cart" small outline onClick={()=>{dispatch(handleClearCart())}} />
                 </div>
                 <div className="flex flex-col items-start text-sm gap-1">
                     <div className="flex justify-between w-full text-base font-semibold">

@@ -20,10 +20,8 @@ const cartSlice = createSlice({
   reducers: {
     addtoCart:(state, action)=>{
         state.cartProducts?.push(action.payload);
-        localStorage.setItem('eShopCartItems', JSON.stringify(state.cartProducts));
     },
     romoveProductFromCart:(state, action)=>{
-      alert("conrole reaches hererr ");
       if(state.cartProducts){
         state.cartProducts=state.cartProducts.filter((item)=>{
           return item.id !== action.payload.id;
@@ -73,10 +71,15 @@ const cartSlice = createSlice({
     },
     handleSetPaymentIntent:(state, action)=>{
       state.paymentIntent=action.payload;
+    },
+    handleClearCart:(state)=>{
+      state.cartProducts=[];
+      state.cartTotalQuantity=0;
+      state.subtotal=0;
     }
   },
 });
 
-export const { addtoCart, romoveProductFromCart, increaseCartProduct, decreaseCartProduct, getTotal, handleSetPaymentIntent} = cartSlice.actions;
+export const { handleClearCart, addtoCart, romoveProductFromCart, increaseCartProduct, decreaseCartProduct, getTotal, handleSetPaymentIntent} = cartSlice.actions;
 
 export default cartSlice.reducer;

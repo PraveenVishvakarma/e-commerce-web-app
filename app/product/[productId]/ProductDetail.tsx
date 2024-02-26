@@ -139,7 +139,7 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
                 </div>
                 <Divider/>
                 <div className="max-w-[300px]">
-                    <Button  small label={"Add toCart"} onClick={handleAddToCart}/>
+                    <Button  small label={"Add to Cart"} onClick={handleAddToCart}/>
                 </div>
                 </>}
                 
