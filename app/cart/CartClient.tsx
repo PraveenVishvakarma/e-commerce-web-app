@@ -1,3 +1,4 @@
+'use client'
 import { RootState } from "@/store/store";
 import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
@@ -8,10 +9,18 @@ import Button from "../components/products/Button";
 import ItemContent from "./ItemContent";
 import { fromatPrice } from "@/utils/FormatPrice";
 import { handleClearCart } from "@/slices/cartSlice";
-const CartClient=()=>{
+import { safeUser } from "@/types";
+import { useRouter } from "next/navigation";
+
+interface CartClientProps{
+    currentUser:safeUser | null,
+}
+
+const CartClient:React.FC<CartClientProps>=({currentUser})=>{
     const {cartProducts}=useSelector((state:RootState)=>state.cart);
     const {subtotal}=useSelector((state:RootState)=>state.cart)
     const dispatch=useDispatch();
+    const router=useRouter();
 
     if(!cartProducts || cartProducts.length===0){
         return(
@@ -52,7 +61,7 @@ const CartClient=()=>{
                         <span>{fromatPrice(subtotal)}</span>
                     </div>
                     <p>Taxes and Shipping is Calculated at Checkout</p>
-                    <Button label="Chechout" small onClick={()=>{}} />
+                    <Button label={currentUser?"Checkout":"login to checkout"} outline={currentUser?false:true} small onClick={()=>{currentUser?router.push("/checkout"):router.push("/login")}} />
                     <Link href={"/"} className="flex text-gray-500 items-center gap-1 mt-2">
                     <MdArrowBack/>
                     <span>Continue Shopping</span>

@@ -1,6 +1,6 @@
 'use client'
 
-import { handleSetPaymentIntent, handleClearCart} from "@/slices/cartSlice";
+import { handleSetPaymentIntent, handleClearCart, handleCheckoutStatus} from "@/slices/cartSlice";
 import { RootState } from "@/store/store";
 import { AddressElement, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
@@ -48,6 +48,7 @@ const CheckoutForm:React.FC<CheckoutFormProps>=({
         .then((result:any)=>{
                 if(result.paymentIntent.status=="succeeded"){
                 handlePaymentSuccess(true);
+                dispatch(handleCheckoutStatus(true));
                 toast.success("Checkout Success");
                 }
             setIsLoading(false);

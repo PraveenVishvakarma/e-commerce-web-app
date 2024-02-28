@@ -5,13 +5,15 @@ interface IntialState{
   subtotal:number,
   cartProducts:CartProductType[] | null,
   paymentIntent:string| null,
+  checkoutStatus:boolean,
 }
 
 const initialState:IntialState = {
   cartProducts: [],
   cartTotalQuantity:0,
   subtotal:0,
-  paymentIntent:null
+  paymentIntent:null,
+  checkoutStatus:false
 } 
 
 const cartSlice = createSlice({
@@ -76,10 +78,13 @@ const cartSlice = createSlice({
       state.cartProducts=[];
       state.cartTotalQuantity=0;
       state.subtotal=0;
+    },
+    handleCheckoutStatus:(state,action)=>{
+      state.checkoutStatus=action.payload;
     }
   },
 });
 
-export const { handleClearCart, addtoCart, romoveProductFromCart, increaseCartProduct, decreaseCartProduct, getTotal, handleSetPaymentIntent} = cartSlice.actions;
+export const {handleCheckoutStatus, handleClearCart, addtoCart, romoveProductFromCart, increaseCartProduct, decreaseCartProduct, getTotal, handleSetPaymentIntent} = cartSlice.actions;
 
 export default cartSlice.reducer;

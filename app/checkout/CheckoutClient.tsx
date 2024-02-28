@@ -72,12 +72,7 @@ const ChechoutClient=()=>{
       )}
       {loading && <p className="text-center">Loading Checkout</p> }
       {error && <p className="text-center text-rose-500">Something went wrong...</p> }
-      {paymentSuccess && <div className="">
-        <div className="">Payment Success</div>
-        <div>
-            <Button label="view your order" onClick={()=>{router.push("/order")}} />
-        </div>
-      </div> }
+
     </div>
     )
 }
