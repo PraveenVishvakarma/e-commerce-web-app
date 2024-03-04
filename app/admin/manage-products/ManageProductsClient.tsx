@@ -4,18 +4,21 @@ import { Product } from "@prisma/client";
 import {DataGrid, GridColDef} from "@mui/x-data-grid"
 import Heading from "@/app/components/products/Heading";
 import Status from "@/app/components/Status";
-import { MdCached, MdClose, MdDelete, MdDone, MdRemove } from "react-icons/md";
+import { MdCached, MdClose, MdDelete, MdDone, MdRemove, MdRemoveRedEye } from "react-icons/md";
 import ActionBtn from "@/app/components/ActionBtn";
 import { useCallback } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { deleteObject, getStorage, ref } from "firebase/storage";
+import firebaseApp from "@/libs/firebase";
 
 interface ManageProductsClientProps{
     products:Product[],
 }
 const ManageProductsClient:React.FC<ManageProductsClientProps>=({products})=>{
     const router=useRouter();
+    const storage=getStorage(firebaseApp);
     let rows:any=[];
     if(products){
         rows=products.map((product)=>{
@@ -65,8 +68,10 @@ const ManageProductsClient:React.FC<ManageProductsClientProps>=({products})=>{
                 return(
                     <div className="flex justify-center gap-4 w-full">
                         <ActionBtn icon={MdCached} onClick={()=>{handleToggleStock(params.row.id,params.row.inStock)}} />
-                        <ActionBtn icon={MdDelete} onClick={()=>{}} />
-                        <ActionBtn icon={MdRemove} onClick={()=>{}} />
+                        <ActionBtn icon={MdDelete} onClick={()=>{handleDelete(params.row.id, params.row.images)}} />
+                        <ActionBtn icon={MdRemoveRedEye} onClick={()=>{
+                            router.push(`product/${params.row.id}`);
+                        }} />
                     </div>
                 )
             }
@@ -85,6 +90,37 @@ const ManageProductsClient:React.FC<ManageProductsClientProps>=({products})=>{
             .catch((err:any)=>{
                 toast.error("O0ps! Something went wrong");
                 console.log("error", err);
+            })
+        },[]);
+
+        const handleDelete=useCallback(async(id:string, images:any[])=>{
+            toast("Deleting products, please wait!")
+
+            const handleImageDelete=async()=>{
+                try{
+                    for(const item of images){
+                        if(item.image){
+                            const imageRef=ref(storage, item.image);
+                            await deleteObject(imageRef);
+                            console.log("Image Delete", item.image);
+                        }
+                    }
+                }
+                catch(error){
+                    return console.log("Deleting images error", error);
+                }
+            };
+
+            await handleImageDelete();
+
+            axios.delete(`/api/product/${id}`)
+            .then((res)=>{
+                toast.success("Product deleted");
+                router.refresh();
+            })
+            .catch((err:any)=>{
+                toast.error("Failed to delete product");
+                console.log(err);
             })
         },[])
     
