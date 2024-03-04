@@ -1,7 +1,13 @@
-const ManageProducts=()=>{
+import getProducts from "@/actions/getProducts";
+import ManageProductsClient from "./ManageProductsClient";
+
+
+
+const ManageProducts= async()=>{
+    const products=await getProducts({category:null}) 
     return(
         <div>
-            Manage Products
+            <ManageProductsClient products={products}/>
         </div>
     )
 };

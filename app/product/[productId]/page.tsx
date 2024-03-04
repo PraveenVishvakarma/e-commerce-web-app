@@ -3,12 +3,14 @@ import React from 'react'
 import ProductDetail from './ProductDetail';
 import ListRating from './ListRating';
 import { products } from '@/utils/products';
+import getProducts from '@/actions/getProducts';
 
 interface IParam{
     productId?:string;
 }
 
-export default function productPage({params}:{params:IParam}) {
+export default async function productPage({params}:{params:IParam}) {
+    const products=await getProducts({category:null});
     const product=products.find((product)=>{
         return product.id===params.productId;
     })
