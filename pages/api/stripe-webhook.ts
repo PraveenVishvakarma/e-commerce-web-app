@@ -35,6 +35,7 @@ export default async function handler(req:NextApiRequest,res:NextApiResponse) {
             const charge:any=event.data.object as Stripe.Charge;
 
             if(typeof charge.payment_intent==="string"){
+                console.log("payemnt saved in database");
                 await prisma?.order.update({
                     where:{paymentIntentId:charge.payment_intent},
                     data:{status:"complete",address:charge.shipping?.address}
