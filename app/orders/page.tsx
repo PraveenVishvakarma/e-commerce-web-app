@@ -15,7 +15,7 @@ const Orders= async()=>{
 
     const orders=await getOrderByUserId(currentUser.id);
     if(!orders){
-        return <div>No Order!</div>
+        return <NullData title="No order yet..." />
     }
     return(
         <div className="pt-8">

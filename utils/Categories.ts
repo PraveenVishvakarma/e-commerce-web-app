@@ -1,5 +1,5 @@
 import { AiFillPhone, AiOutlineDesktop, AiOutlineLaptop } from "react-icons/ai";
-import { MdOutlineKeyboard, MdStorefront, MdTv } from "react-icons/md";
+import { MdOutlineKeyboard, MdStorefront, MdTv, MdWatch } from "react-icons/md";
 
 export const categories=[
     {
@@ -9,6 +9,10 @@ export const categories=[
     {
         label:'Phone',
         icon:AiFillPhone
+    },
+    {
+        label:"Watch",
+        icon:MdWatch
     },
     {
         label:'Laptop',

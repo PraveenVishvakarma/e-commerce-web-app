@@ -25,9 +25,14 @@ const cartSlice = createSlice({
     },
     romoveProductFromCart:(state, action)=>{
       if(state.cartProducts){
+        if(state.cartProducts.length>1){
         state.cartProducts=state.cartProducts.filter((item)=>{
           return item.id !== action.payload.id;
         })
+      }else{
+        state.cartTotalQuantity=0;
+        state.cartProducts=[];
+      }
       } 
     },
     increaseCartProduct:(state, action)=>{

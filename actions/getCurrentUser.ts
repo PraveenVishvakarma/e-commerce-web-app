@@ -17,20 +17,19 @@ export async function getCurrentUser() {
         const currentUser=await prisma.user.findUnique({
             where:{
                 email:session?.user?.email,
-            }
+            },
+            include:{orders:true}
         });
 
         if(!currentUser){
             return null;
         }
-        const safeUser: safeUser = {
+        return {
             ...currentUser,
             createAt: currentUser.createAt.toISOString(),
             updateAt: currentUser.updateAt.toISOString(),
             emailVerified: currentUser.emailVerified ? currentUser.emailVerified.toISOString() : null,
         };
-
-        return safeUser;
     }
     catch(error:any){
         return null;

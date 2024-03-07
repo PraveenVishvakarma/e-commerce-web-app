@@ -4,10 +4,27 @@ import Container from './components/Container'
 import { products } from '@/utils/products'
 import truncate from '@/utils/truncate'
 import ProductCard from './components/products/ProductCard'
-import getProducts from '@/actions/getProducts'
+import getProducts, { IProductParams } from '@/actions/getProducts'
+import NullData from './components/NullData'
 
-export default async function Home() {
-  const products=await getProducts({category:null});
+interface HomeProps{
+  searchParams:IProductParams
+}
+
+export default async function Home({searchParams}:HomeProps) {
+  const products=await getProducts(searchParams);
+  if(products.length===0){
+    return <NullData title='Oops! No Product found. Click "All" to clear the filter' />
+  }
+
+  const suffledArray=(arr:any)=>{
+    for(let i=arr.length-1; i>0; i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    return arr;
+  }
+  const suffedProducts=suffledArray(products);
   return ( 
     <div className='p-8'> 
       <Container>
@@ -15,7 +32,7 @@ export default async function Home() {
           <HomeBanner/>
         </div>
         <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8'>
-          {products.map((product:any)=>{
+          {suffedProducts.map((product:any)=>{
             return <ProductCard data={product} />
           })}
         </div> 
