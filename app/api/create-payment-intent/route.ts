@@ -20,7 +20,7 @@ const calculateOrderAmount=(items:CartProductType[])=>{
 export async function POST(request:Request){
     const currentUser=await getCurrentUser();
     if(!currentUser){
-        return NextResponse.json({error:'Unauthorized'},{status:401})
+        return NextResponse.error();
     }
     const body=await request.json()
     const{items, payment_intent_id}=body;
@@ -56,10 +56,7 @@ export async function POST(request:Request){
                 }),
             ]);
             if(!existing_order){
-                return NextResponse.json({
-                    error:"Invalid Payment Intent"
-                },
-                {status:400});
+                return NextResponse.error();
             }
             return NextResponse.json({paymentIntent:updated_intent});
         }
@@ -78,5 +75,6 @@ export async function POST(request:Request){
     });
         return NextResponse.json({paymentIntent});
     }
+    return NextResponse.error();
 }
 
