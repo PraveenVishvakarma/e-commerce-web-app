@@ -24,7 +24,7 @@ const AdminPage=async()=>{
     }
 
     if(!users){
-        return null;
+        return <NullData title="Oops! No user" />;
     }
 
     return(
