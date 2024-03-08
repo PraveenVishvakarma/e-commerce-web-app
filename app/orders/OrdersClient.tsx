@@ -90,7 +90,7 @@ const OrdersClient:React.FC<OrdersClientProps>=({orders})=>{
                 return(
                     <div>
                         <ActionBtn icon={MdRemoveRedEye} onClick={()=>{
-                            router.push(`admin/order/${params.row.id}`);
+                            router.push(`order/${params.row.id}`);
                         }} />
                     </div>
                 )
