@@ -2,7 +2,7 @@
 
 import { Order, Product, User } from "@prisma/client";
 import { useEffect, useState } from "react";
-import Heading from "../components/products/Heading";
+import Heading from "./products/Heading";
 import { fromatPrice } from "@/utils/FormatPrice";
 
 interface SummaryProps{

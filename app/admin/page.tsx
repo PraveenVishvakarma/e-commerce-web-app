@@ -1,10 +1,10 @@
 import getProducts from "@/actions/getProducts";
 import Container from "../components/Container";
-import Summary from "./Summary";
+import Summary from "../components/Summary";
 import getOrders from "@/actions/getOrders";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import getUsers from "@/actions/getUsers";
-import BarGraphData from "./BarGraph";
+import BarGraphData from "../components/BarGraph";
 import getGraphData from "@/actions/getGraphData";
 import NullData from "../components/NullData";
 
