@@ -6,6 +6,7 @@ import CartCount from './CartCount';
 import UserMenu from './UserMenu';
 import { getCurrentUser } from '@/actions/getCurrentUser';
 import Categories from './Categories';
+import SearchBar from './SearchBar';
 
 const redressed=Redressed({subsets:["latin"],weight:["400"]});
 
@@ -40,7 +41,7 @@ const redressed=Redressed({subsets:["latin"],weight:["400"]});
                     hidden
                     md:block
                     '
-                    >Search</div>
+                    ><SearchBar/></div>
                     <div 
                     className='
                     flex 

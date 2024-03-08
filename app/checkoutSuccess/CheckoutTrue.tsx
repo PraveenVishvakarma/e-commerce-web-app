@@ -29,9 +29,9 @@ const CheckoutTrue:React.FC<CheckoutTrueProps>=({currentUser})=>{
     return(
         <div className="w-full">
        <div className="">
-      <div className="text-2xl text-center m-4">Payment Success</div>
+      <div className="text-2xl text-teal-700 text-center m-4">Payment Success</div>
       <div>
-          <Button label="view your order" onClick={()=>{router.push("/order")}} />
+          <Button label="view your order" onClick={()=>{router.push("/orders")}} />
       </div>
       </div> 
       </div>
