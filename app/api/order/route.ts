@@ -1,6 +1,6 @@
 
 import { getCurrentUser } from '@/actions/getCurrentUser';
-import prisma from '@/app/prismadb'
+import prisma from '@/libs/prismadb'
 import { NextResponse } from 'next/server'
 
 

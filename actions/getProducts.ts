@@ -1,4 +1,4 @@
-import prisma from "@/app/prismadb";
+import prisma from "@/libs/prismadb";
 
 export interface IProductParams{
     searchTerm?:string | null,

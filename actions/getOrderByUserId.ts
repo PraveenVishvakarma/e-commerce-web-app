@@ -1,4 +1,4 @@
-import prisma from "@/app/prismadb";
+import prisma from "@/libs/prismadb";
 
 export default async function getOrderByUserId(userId:string){
     try{

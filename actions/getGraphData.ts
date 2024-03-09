@@ -1,5 +1,5 @@
 import moment from "moment";
-import prisma from "@/app/prismadb";
+import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
 
 export default async function getGraphData(){

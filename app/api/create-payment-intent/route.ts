@@ -1,6 +1,6 @@
 import Stripe from "stripe"
 import { NextResponse } from "next/server"
-import  prisma  from "@/app/prismadb"
+import  prisma  from "@/libs/prismadb"
 import { CartProductType } from "@/app/product/[productId]/ProductDetail";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 
