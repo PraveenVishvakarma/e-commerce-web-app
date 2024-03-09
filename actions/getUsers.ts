@@ -1,3 +1,4 @@
+import prisma from "@/app/prismadb"
 export default async function getUsers(){
     try{
         const users=prisma?.user.findMany();

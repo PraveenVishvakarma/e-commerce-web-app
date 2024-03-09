@@ -8,7 +8,7 @@ import { fromatPrice } from "@/utils/FormatPrice";
 interface SummaryProps{
     orders:Order[];
     products:Product[];
-    users:User[]
+    users:User[],
 }
 
 type SummaryDataType={
