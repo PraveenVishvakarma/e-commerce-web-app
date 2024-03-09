@@ -1,6 +1,6 @@
 'use client'
 
-import { Order, User } from "@prisma/client";
+import { User } from "@prisma/client";
 import {DataGrid, GridColDef} from "@mui/x-data-grid"
 import Heading from "@/app/components/products/Heading";
 import Status from "@/app/components/Status";
@@ -14,17 +14,17 @@ import moment from "moment";
 import { fromatPrice } from "@/utils/FormatPrice";
 
 interface ManageOrdersClientProps{
-    orders:ExtendedOrder[],
+    orders:any,
 }
 
-type ExtendedOrder=Order & {
-    user:User
-}
+// type ExtendedOrder=Order & {
+//     user:User
+// }
 const ManageOrdersClient:React.FC<ManageOrdersClientProps>=({orders})=>{
     const router=useRouter();
     let rows:any=[];
     if(orders){
-        rows=orders.map((order)=>{
+        rows=orders.map((order:any)=>{
             return {
                 id:order.id,
                 customer:order.user.name,
