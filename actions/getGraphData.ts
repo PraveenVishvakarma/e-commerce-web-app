@@ -1,5 +1,6 @@
 import moment from "moment";
 import prisma from "@/app/prismadb";
+import { NextResponse } from "next/server";
 
 export default async function getGraphData(){
     try{
@@ -47,6 +48,6 @@ export default async function getGraphData(){
         return formattedData;
     }
     catch(error:any){
-        throw new Error(error);
+        throw NextResponse.error();
     }
 }
