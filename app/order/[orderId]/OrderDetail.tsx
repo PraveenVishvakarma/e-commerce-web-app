@@ -36,7 +36,7 @@ const OrderDetail:React.FC<OrderDetailProps>=({order})=>{
                 <div>Delivery Status:</div>
                 <div>
                     {order?.deliveryStatus==='pending' ? <Status text="pending" icon={MdAccessTimeFilled} bg="bg-slate-200" color="text-slate-700" /> : 
-                    order.deliveryStatus==='dispatched' ? <Status text="Dispatched" icon={MdDeliveryDining} bg="bg-purple-200" color="text-purple-700" />:order.deliveryStatus==='complete' ? <Status text="Completed" icon={MdDone} bg="bg-green-200" color="text-green-700" />: <></>  }
+                    order.deliveryStatus==='dispatched' ? <Status text="Dispatched" icon={MdDeliveryDining} bg="bg-purple-200" color="text-purple-700" />:order.deliveryStatus==='delivered' ? <Status text="Completed" icon={MdDone} bg="bg-teal-200" color="text-teal-700" />: <></>  }
                 </div>
             </div>
             <div>Date: {moment(order.createDate).fromNow()}</div>

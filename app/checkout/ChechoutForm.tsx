@@ -9,6 +9,7 @@ import { useSelector, useDispatch} from "react-redux";
 import Heading from "../components/products/Heading";
 import Button from "../components/products/Button";
 import { useRouter } from "next/navigation";
+import { fromatPrice } from "@/utils/FormatPrice";
 
 interface CheckoutFormProps{
     clientSecret:string,
@@ -72,7 +73,7 @@ const CheckoutForm:React.FC<CheckoutFormProps>=({
             layout:"tabs"
         }} />
         <div className="py-4 text-center text-slate-700 text-xl font-bold">
-            Total: {subtotal}
+            Total: {fromatPrice(subtotal)}
         </div>
         <Button label={isLoading ? "Processing":"Pay now"} disabled={isLoading || !stripe || !elements} onClick={()=>{}} />
     </form>

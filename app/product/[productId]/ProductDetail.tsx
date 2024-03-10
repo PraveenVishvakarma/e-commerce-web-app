@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { AppDispatch, RootState } from "@/store/store";
 import { addtoCart, getTotal } from "@/slices/cartSlice";
 import { toast } from "react-hot-toast";
+import { fromatPrice } from "@/utils/FormatPrice";
 
 interface productDetailProps{
     product:any;
@@ -109,6 +110,8 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
                         <Rating value={productRating} readOnly />
                     <div>{product.reviews.length} Reviews</div>
                 </div>
+                <Divider />
+                <p className="font-bold text-2xl text-slate-800">{fromatPrice(product.price)} </p>
                 <Divider/>
                 <p className="text-justify">{product.description}</p>
                 <Divider/>
@@ -139,7 +142,7 @@ const ProductDetail:React.FC<productDetailProps>=({product}:{product:any})=>{
                 </div>
                 <Divider/>
                 <div className="max-w-[300px]">
-                    <Button  small label={"Add to Cart"} onClick={handleAddToCart}/>
+                    <Button disabled={product.inStock?false:true} small label={"Add to Cart"}  onClick={handleAddToCart}/>
                 </div>
                 </>}
                 
