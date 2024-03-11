@@ -2,7 +2,7 @@ import getProducts from "@/actions/getProducts";
 import Container from "../components/Container";
 import Summary from "../components/Summary";
 import getOrders from "@/actions/getOrders";
-//import { getCurrentUser } from "@/actions/getCurrentUser";
+import { getCurrentUser } from "@/actions/getCurrentUser";
 import getUsers from "@/actions/getUsers";
 import BarGraphData from "../components/BarGraph";
 import getGraphData from "@/actions/getGraphData";
@@ -14,17 +14,17 @@ const AdminPage=async()=>{
     const orders=await getOrders();
     const users=await getUsers();
     const graphData=await getGraphData();
-    //const currentUser=await getCurrentUser();
+    const currentUser=await getCurrentUser();
 
-    // if(!currentUser){
-    //     return <NullData title="Oops! Access Denied, Please login." />
-    // }
-        if(!users){
+     if(!currentUser){
+        return <NullData title="Oops! Access Denied, Please login." />
+     }
+       if(currentUser.role !=="ADMIN"){
+         return <NullData title="Oops! Access Denied, Please login as an Admin" />
+     }
+     if(!users){
         return <NullData title="Oops! No user"  />
-    // if(currentUser.role !=="ADMIN"){
-    //     return <NullData title="Oops! Access Denied, Please login as an Admin" />
-    // }
-   }
+      }
 
   
 
