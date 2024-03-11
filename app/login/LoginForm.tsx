@@ -65,7 +65,7 @@ const LoginForm:React.FC<LoginFormProps>=({currentUser})=>{
         <Button label="Continue with Google" outline icon={AiOutlineGoogle} onClick={()=>{signIn('google')}} />
         <hr className="bg-slate-300 w-full h-px" />
         <Input id='email' label="Email" disabled={isLoading} register={register} errors={errors} required />
-        <Input id='password' label="Password" disabled={isLoading} register={register} errors={errors} required />
+        <Input id='password' type="password" label="Password" disabled={isLoading} register={register} errors={errors} required />
         <Button label={`${isLoading?"Loading...":'Login'}`} onClick={handleSubmit(onSubmit)} />
         <p>Don't have an Account?{" "} <Link href={"/register"} className="underline text-blue-500">
             Sign up
